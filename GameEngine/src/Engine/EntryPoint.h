@@ -2,6 +2,7 @@
 
 #ifdef ENGINE_PLATFORM_WINDOWS
 
+// Will be defined in the application
 extern Engine::Application* Engine::CreateApplication();
 
 int main(int argc, char** argv)

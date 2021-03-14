@@ -1,5 +1,9 @@
 #pragma once
-// Used by applications that uses the engine
+
+/*
+* Used by applications that uses the engine
+* Combines multiple includes
+*/
 
 
 #include "Engine/Application.h"
