@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-* Used by applications that uses the engine
+* Used by applications that use the engine
 * Combines multiple includes
 */
 

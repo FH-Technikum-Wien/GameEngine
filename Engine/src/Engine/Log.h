@@ -7,6 +7,9 @@
 
 namespace Engine {
 
+	/// <summary>
+	/// Wrapper for spdlog::logger
+	/// </summary>
 	class ENGINE_API Log
 	{
 	public:
