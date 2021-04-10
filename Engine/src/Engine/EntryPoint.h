@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 {
 	// TODO: Move to ENGINE INIT
 	Engine::Log::Init();
-	ENGINE_CORE_INFO("Engine Startup");
+	LOG_CORE_INFO("Engine Startup");
 
 	Engine::Application* application = Engine::CreateApplication();
 	application->Run();

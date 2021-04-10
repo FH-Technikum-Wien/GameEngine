@@ -12,3 +12,7 @@
 //---------- ENTRY POINT ----------
 #include "Engine/EntryPoint.h"
 //---------------------------------
+
+//---------- BASIC MATH -----------
+#include "Engine/Vector2.h"
+//---------------------------------
