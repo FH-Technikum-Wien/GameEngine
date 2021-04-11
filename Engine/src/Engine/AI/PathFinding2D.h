@@ -29,7 +29,9 @@ namespace Engine::AI
 		/// </summary>
 		struct IdPath2D
 		{
+			// The ids of the nodes of the path.
 			sizeType* Ids;
+			// The number of ids (nodes) this path represents.
 			sizeType Size;
 		};
 
@@ -38,7 +40,9 @@ namespace Engine::AI
 		/// </summary>
 		struct PositionPath2D
 		{
+			// The position of the nodes of the path.
 			Vector2* Positions;
+			// The number of positions (nodes) this path represents.
 			sizeType Size;
 		};
 
