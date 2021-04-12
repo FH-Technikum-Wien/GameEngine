@@ -54,7 +54,7 @@ namespace Engine::AI
 		/// </summary>
 		struct Node
 		{
-			// Node's position in the array.
+			// Node's position in the array and unique identifier.
 			sizeType Id;
 			// Actual position of the node.
 			Vector2 Position;
@@ -84,8 +84,36 @@ namespace Engine::AI
 		~PathFinding2D();
 
 		/// <summary>
-		/// Adds a node consisting of a position and a weigth to the system. 
-		/// As the id is used as the position in an array, try to avoid big gaps.
+		/// Adds a node with the given position to the system. 
+		/// The id will automatically be incremented and the weigthScale of the node will be set to 1.0f.
+		/// As the id is used as the position in an array, gaps can be created.
+		/// </summary>
+		/// <param name="position">- The position of the node.</param>
+		/// <returns>True, if the node was added. False, if the node already exists.</returns>
+		bool AddNode(Vector2 position);
+
+		/// <summary>
+		/// Adds a node with the given position and weigthScale to the system. 
+		/// The id will automatically be incremented.
+		/// As the id is used as the position in an array, gaps can be created.
+		/// </summary>
+		/// <param name="position">- The position of the node.</param>
+		/// <param name="weigthScale">- The algorithm will prefer nodes with a lower weigthScale.</param>
+		/// <returns>True, if the node was added. False, if the node already exists.</returns>
+		bool AddNode(Vector2 position, float weigthScale);
+
+		/// <summary>
+		/// Adds a node with the given position and id to the system. The weigthScale of the node will be set to 1.0f.
+		/// As the id is used as the position in an array, gaps can be created.
+		/// </summary>
+		/// <param name="id">- Unique id greater or equal to 0.</param>
+		/// <param name="position">- The position of the node.</param>
+		/// <returns>True, if the node was added. False, if the node already exists.</returns>
+		bool AddNode(sizeType id, Vector2 position);
+
+		/// <summary>
+		/// Adds a node with the given position, id and weigthScale to the system.
+		/// As the id is used as the position in an array, gaps can be created.
 		/// </summary>
 		/// <param name="id">- Unique id greater or equal to 0.</param>
 		/// <param name="position">- The position of the node.</param>
@@ -139,7 +167,7 @@ namespace Engine::AI
 		/// <param name="idTo">- The id of the second node.</param>
 		/// <param name="weigthScale">- The algorithm will prefer connections with a lower weigthScale.</param>
 		/// <param name="bidirectional">- Whether the nodes should be connected bidirectional.</param>
-		void ConnectNodes(sizeType idFrom, sizeType idTo, float weigthScale = 1.0f, bool bidirectional = true);	
+		void ConnectNodes(sizeType idFrom, sizeType idTo, float weigthScale, bool bidirectional);	
 
 		/// <summary>
 		/// Clears the system, removing all nodes and connections.
@@ -259,13 +287,14 @@ namespace Engine::AI
 		void CalculateEstimatedCost(sizeType idFrom, sizeType idTo);
 
 	private:
-
 		// Current number of nodes in the system.
-		sizeType m_size;
+		sizeType m_size = 0;
 		// Max number of nodes with current allocated memory.
-		sizeType m_capacity;
+		sizeType m_capacity = 0;
 		// List of all nodes in the system.
-		Node* m_nodes;
+		Node* m_nodes = nullptr;
+		// Current id for the auto-incrementation.
+		sizeType m_currentId = 0;
 	};
 }
 
