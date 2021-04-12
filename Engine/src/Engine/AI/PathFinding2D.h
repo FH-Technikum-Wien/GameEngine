@@ -18,11 +18,11 @@ namespace Engine::AI
 	/// Bidirectional connections are two connections between two nodes.
 	/// A connection can be directed as well as better in one direction than the other.
 	/// </summary>
-	/// <typeparam name="sizeType">- Defines the internal type for ids</typeparam>
+	/// <typeparam name="sizeType">- Defines the internal type for ids. Should be a whole number type.</typeparam>
 	template<typename sizeType = unsigned int>
 	class ENGINE_API PathFinding2D
 	{
-
+#pragma region Public Structs
 	public:
 		/// <summary>
 		/// A path represented by the node's ids.
@@ -45,7 +45,9 @@ namespace Engine::AI
 			// The number of positions (nodes) this path represents.
 			sizeType Size;
 		};
-
+#pragma endregion
+	
+#pragma region Private Structs
 	private:
 		struct Connection;
 
@@ -78,6 +80,35 @@ namespace Engine::AI
 			// The algorithm will prefer connections with a lower weigthScale.
 			float weigthScale;
 		};
+
+		/// <summary>
+		/// A path consists of an array of nodes. The order of the nodes represents the path.
+		/// </summary>
+		struct Path
+		{
+			// Nodes that create the path.
+			Node** Nodes;
+			// Number of nodes the path consists of.
+			sizeType Length;
+		};
+
+		/// <summary>
+		/// A tilemap consists of tiles (squares) of the same size.
+		/// The map will tiles that can be used for the path (weigthScale >= 0) and tiles that cannot be used, such as walls (e.g. weigthScale = -1).
+		/// </summary>
+		struct Tilemap
+		{
+			// 2D array of nodes, creating the tilemap.
+			Node** Tiles;
+			// Width of the tilemap.
+			float Width;
+			// Height of the tilemap.
+			float Height;
+			// The size of each tile (square). Influences the position of the nodes.
+			float TileSize;
+		};
+#pragma endregion
+
 
 	public:
 		PathFinding2D();
@@ -170,11 +201,6 @@ namespace Engine::AI
 		void ConnectNodes(sizeType idFrom, sizeType idTo, float weigthScale, bool bidirectional);	
 
 		/// <summary>
-		/// Clears the system, removing all nodes and connections.
-		/// </summary>
-		void Clear();
-
-		/// <summary>
 		/// Updates the position of the node with the given id.
 		/// </summary>
 		/// <param name="id">- The id of the node to be updated.</param>
@@ -243,10 +269,33 @@ namespace Engine::AI
 		float GetConnectionWeigthScale(sizeType idFrom, sizeType idTo);
 
 		/// <summary>
+		/// Adds a tilemap at the given position with the given width, height and tile size.
+		/// This deactivates the ability to add new nodes manually.
+		/// Creates nodes and connections automatically.
+		/// </summary>
+		/// <param name="center">- The center point of the tilemap.</param>
+		/// <param name="width">- The width of the tilemap.</param>
+		/// <param name="height">- The height of the tilemap.</param>
+		/// <param name="tileSize">- The size of each tile (square).</param>
+		void AddTilemap(Vector2 center, int width, int height, float tileSize);
+
+		/// <summary>
+		/// Removes/Deactivates the tilemap, allowing the user to manually add nodes again.
+		/// This does not remove nodes. Nodes and connections created by the tilemap will stay.
+		/// </summary>
+		void RemoveTilemap();
+
+		/// <summary>
+		/// Clears the system, removing all nodes and connections.
+		/// Also removes the tilemap.
+		/// </summary>
+		void Clear();
+
+		/// <summary>
 		/// Allocates more memory for the array containing the nodes. Use this if you add a lot of nodes at once.
 		/// </summary>
 		/// <param name="numberOfNodes">- The new number of nodes in the system.</param>
-		void Reserve(sizeType numberOfNodes);
+		void Reserve(sizeType newCapacity);
 
 		/// <summary>
 		/// Returns the current capacity of the system (max number of nodes).
@@ -265,6 +314,7 @@ namespace Engine::AI
 		/// <param name="filePath">- The path to the file.</param>
 		/// <returns>True if the file was read. False if the file could not be read.</returns>
 		bool LoadNodes(std::string filePath);
+
 		/// <summary>
 		/// Saves nodes and connections to a file.
 		/// </summary>
@@ -273,28 +323,49 @@ namespace Engine::AI
 		void SaveNodes(std::string filePath);
 
 		/// <summary>
+		/// Calculates the path between the given two nodes.
+		/// </summary>
+		/// <param name="idFrom">- The id of the start node.</param>
+		/// <param name="idTo">- The id of the end node.</param>
+		Path CalculatePath(sizeType idFrom, sizeType idTo);
+
+		/// <summary>
 		/// Calculates the cost between the given nodes.
 		/// </summary>
 		/// <param name="idFrom">- The id of the start node.</param>
 		/// <param name="idTo">- The id of the end node.</param>
-		void CalculateCost(sizeType idFrom, sizeType idTo);
+		float CalculateCost(sizeType idFrom, sizeType idTo);
 
 		/// <summary>
-		/// Calculates the estimated cost between the given nodes (euclidean).
+		/// Calculates the estimated cost between the given nodes (euclidean distance).
 		/// </summary>
 		/// <param name="idFrom">- The id of the start node.</param>
 		/// <param name="idTo">- The id of the end node.</param>
-		void CalculateEstimatedCost(sizeType idFrom, sizeType idTo);
+		float CalculateEstimatedCost(sizeType idFrom, sizeType idTo);
+
+		/// <summary>
+		/// Creates a tilemap with the given width, height and tile size.
+		/// </summary>
+		/// <param name="center">- The center point of the tilemap.</param>
+		/// <param name="width">- The width of the tilemap.</param>
+		/// <param name="height">- The height of the tilemap.</param>
+		/// <param name="tileSize">- The size of each tile (square).</param>
+		/// <returns>A tilemap containing all created nodes.</returns>
+		Tilemap GenerateTilemap(Vector2 center, int width, int height, float tileSize);
 
 	private:
 		// Current number of nodes in the system.
-		sizeType m_size = 0;
+		sizeType m_size;
 		// Max number of nodes with current allocated memory.
-		sizeType m_capacity = 0;
+		sizeType m_capacity;
 		// List of all nodes in the system.
-		Node* m_nodes = nullptr;
+		Node* m_nodes;
 		// Current id for the auto-incrementation.
-		sizeType m_currentId = 0;
+		sizeType m_currentId;
+		// The current tilemap used for pathfinding.
+		Tilemap* m_tilemap;
+		// Prevents the user from adding nodes manually when using the tilemap.
+		bool m_useTilemap;
 	};
 }
 
