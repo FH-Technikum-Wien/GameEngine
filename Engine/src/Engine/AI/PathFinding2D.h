@@ -22,7 +22,6 @@ namespace Engine::AI
 	template<typename sizeType = unsigned int>
 	class ENGINE_API PathFinding2D
 	{
-#pragma region Public Structs
 	public:
 		/// <summary>
 		/// A path represented by the node's ids.
@@ -45,14 +44,12 @@ namespace Engine::AI
 			// The number of positions (nodes) this path represents.
 			sizeType Size;
 		};
-#pragma endregion
-	
-#pragma region Private Structs
+
 	private:
 		struct Connection;
 
 		/// <summary>
-		/// Consists of a position, weigthScale and arbitrary number of (bidirectional) connections to other nodes.
+		/// Consists of an id, position, weigthScale and arbitrary number of (bidirectional) connections to other nodes.
 		/// </summary>
 		struct Node
 		{
@@ -94,7 +91,8 @@ namespace Engine::AI
 
 		/// <summary>
 		/// A tilemap consists of tiles (squares) of the same size.
-		/// The map will tiles that can be used for the path (weigthScale >= 0) and tiles that cannot be used, such as walls (e.g. weigthScale = -1).
+		/// The map will tiles that can be used for the path (e.g. weigthScale >= 0) 
+		/// and tiles that cannot be used, such as walls (e.g. weigthScale = -1).
 		/// </summary>
 		struct Tilemap
 		{
@@ -107,12 +105,12 @@ namespace Engine::AI
 			// The size of each tile (square). Influences the position of the nodes.
 			float TileSize;
 		};
-#pragma endregion
-
 
 	public:
 		PathFinding2D();
-		~PathFinding2D();
+		PathFinding2D(sizeType capacity);
+		PathFinding2D(const PathFinding2D& other);
+		virtual ~PathFinding2D();
 
 		/// <summary>
 		/// Adds a node with the given position to the system. 
@@ -237,7 +235,7 @@ namespace Engine::AI
 		/// <param name="idFrom">- The id of the start node.</param>
 		/// <param name="idTo">- The id of the end node.</param>
 		/// <returns>An 'IdPath2D' containing all ids of the nodes of this path. Returns a nullptr if no path was found.</returns>
-		IdPath2D* GetIdPath(sizeType idFrom, sizeType idTo);
+		IdPath2D* GetIdPath(sizeType idFrom, sizeType idTo) const;
 
 		/// <summary>
 		/// Calculates a path between the given nodes and returns it as an array of the node's positions (in order of the path).
@@ -245,28 +243,28 @@ namespace Engine::AI
 		/// <param name="idFrom">- The id of the start node.</param>
 		/// <param name="idTo">- The id of the end node.</param>
 		/// <returns>A 'PositionPath2D' containing all posiitons of the nodes of this path. Returns a nullptr if no path was found.</returns>
-		PositionPath2D* GetPositionPath(sizeType idFrom, sizeType idTo);
+		PositionPath2D* GetPositionPath(sizeType idFrom, sizeType idTo) const;
 
 		/// <summary>
 		/// Gets the positon of the node with the given Id.
 		/// </summary>
 		/// <param name="id">The id of the node.</param>
 		/// <returns>The position of the node.</returns>
-		Vector2 GetNodePosition(sizeType id);
+		const Vector2& GetNodePosition(sizeType id) const;
 
 		/// <summary>
 		/// Gets the weigthScale of the node with the given Id.
 		/// </summary>
 		/// <param name="id">The id of the node.</param>
 		/// <returns>The weigthScale of the node.</returns>
-		float GetNodeWeigthScale(sizeType id);
+		float GetNodeWeigthScale(sizeType id) const;
 
 		/// <summary>
 		/// Gets the weigthScale of the connection between the given nodes.
 		/// </summary>
 		/// <param name="idFrom">- The id of the start node.</param>
 		/// <param name="idTo">- The id of the end node.</param>
-		float GetConnectionWeigthScale(sizeType idFrom, sizeType idTo);
+		float GetConnectionWeigthScale(sizeType idFrom, sizeType idTo) const;
 
 		/// <summary>
 		/// Adds a tilemap at the given position with the given width, height and tile size.
@@ -286,7 +284,7 @@ namespace Engine::AI
 		void RemoveTilemap();
 
 		/// <summary>
-		/// Clears the system, removing all nodes and connections.
+		/// Clears the system, removing all nodes and connections, resetting it completely.
 		/// Also removes the tilemap.
 		/// </summary>
 		void Clear();
@@ -300,12 +298,20 @@ namespace Engine::AI
 		/// <summary>
 		/// Returns the current capacity of the system (max number of nodes).
 		/// </summary>
-		sizeType Capacity();
+		sizeType Capacity() const;
 
 		/// <summary>
 		/// Returns the number of nodes currently in the system.
 		/// </summary>
-		sizeType Size();
+		sizeType Size() const;
+
+		/// <summary>
+		/// Finds the nearest node to the given position and returns it's id.
+		/// If using a tilemap, will use the tile size to increase search speed.
+		/// </summary>
+		/// <param name="position">- The position to search for.</param>
+		/// <returns>The id of the node.</returns>
+		sizeType FindClosestNode(const Vector2 position) const;
 
 	private:
 		/// <summary>
@@ -313,35 +319,37 @@ namespace Engine::AI
 		/// </summary>
 		/// <param name="filePath">- The path to the file.</param>
 		/// <returns>True if the file was read. False if the file could not be read.</returns>
-		bool LoadNodes(std::string filePath);
+		bool LoadNodes(const std::string filePath);
+		bool LoadNodes(const char* filePath);
 
 		/// <summary>
 		/// Saves nodes and connections to a file.
 		/// </summary>
 		/// <param name="filePath">- The path to the file.</param>
 		/// <returns>True if the file was saved. False if the file could not be saved.</returns>
-		void SaveNodes(std::string filePath);
+		void SaveNodes(const std::string filePath);
+		void SaveNodes(const char* filePath);
 
 		/// <summary>
 		/// Calculates the path between the given two nodes.
 		/// </summary>
 		/// <param name="idFrom">- The id of the start node.</param>
 		/// <param name="idTo">- The id of the end node.</param>
-		Path CalculatePath(sizeType idFrom, sizeType idTo);
+		Path CalculatePath(sizeType idFrom, sizeType idTo) const;
 
 		/// <summary>
 		/// Calculates the cost between the given nodes.
 		/// </summary>
 		/// <param name="idFrom">- The id of the start node.</param>
 		/// <param name="idTo">- The id of the end node.</param>
-		float CalculateCost(sizeType idFrom, sizeType idTo);
+		float CalculateCost(sizeType idFrom, sizeType idTo) const;
 
 		/// <summary>
 		/// Calculates the estimated cost between the given nodes (euclidean distance).
 		/// </summary>
 		/// <param name="idFrom">- The id of the start node.</param>
 		/// <param name="idTo">- The id of the end node.</param>
-		float CalculateEstimatedCost(sizeType idFrom, sizeType idTo);
+		float CalculateEstimatedCost(sizeType idFrom, sizeType idTo) const;
 
 		/// <summary>
 		/// Creates a tilemap with the given width, height and tile size.
