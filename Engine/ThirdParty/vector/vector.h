@@ -1,5 +1,6 @@
 #pragma once
 #include <cstddef> // std::size_t
+#include <algorithm>
 
 
 // Copy and swap idiom
@@ -14,7 +15,9 @@ class Vector
 public:
 
 	// Default constructor
-	Vector() {}
+	Vector()
+	{
+	}
 
 	// Constructor with given size
 	explicit Vector(std::size_t size)
@@ -63,8 +66,14 @@ public:
 		return *this;
 	}
 
-	T operator[](int i) const { return m_data[i]; }
-	T& operator[](int i) { return m_data[i]; }
+	T operator[](int i) const
+	{
+		return m_data[i];
+	}
+	T& operator[](int i)
+	{
+		return m_data[i];
+	}
 
 
 
@@ -163,7 +172,8 @@ public:
 		m_capacity = capacity;
 		T* temp = reinterpret_cast<T*>(new char[m_capacity * sizeof(T)]);
 		// Move data to new memory
-		if (m_data != nullptr) {
+		if (m_data != nullptr)
+		{
 			std::move(m_data, m_data + m_size, temp);
 			// Delete and free up old allocated memory
 			delete[] reinterpret_cast<char*>(m_data);
@@ -209,24 +219,36 @@ public:
 	/// <summary>
 	/// Returns the reference of the element at the given index.
 	/// </summary>
-	inline T& at(std::size_t index) { return m_data[index]; }
+	inline T& at(std::size_t index)
+	{
+		return m_data[index];
+	}
 
 	/// <summary>
 	/// Returns the number of elements inside the vector.
 	/// </summary>
-	inline std::size_t size() const { return m_size; }
+	inline std::size_t size() const
+	{
+		return m_size;
+	}
 
 	/// <summary>
 	/// Returns the possible number of element with the current memory allocation.
 	/// Anything exceeding this number will cause a reallocation of more memory.
 	/// </summary>
-	inline std::size_t capacity() const { return m_capacity; }
+	inline std::size_t capacity() const
+	{
+		return m_capacity;
+	}
 
 	/// <summary>
 	/// Returns the pointer to the internal array.
 	/// </summary>
 	/// <returns></returns>
-	inline T* as_array() const { return m_data; }
+	inline T* as_array() const
+	{
+		return m_data;
+	}
 
 private:
 	// Data/elements.

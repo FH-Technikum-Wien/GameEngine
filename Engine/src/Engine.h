@@ -7,12 +7,12 @@
 
 
 #include <Engine/Application.h>
-#include <Engine/Log.h>
+#include <Engine/Logging/Log.h>
 
 //---------- ENTRY POINT ----------
 #include <Engine/EntryPoint.h>
 //---------------------------------
 
 //---------- BASIC MATH -----------
-#include <Engine/Vector2.h>
+#include <Engine/Math/Math.h>
 //---------------------------------
