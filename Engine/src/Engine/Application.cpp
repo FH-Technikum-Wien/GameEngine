@@ -23,7 +23,7 @@ namespace Engine
 		{
 			// Calculate deltaTime
 			auto currentFrameTime = clock.now();
-			auto deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentFrameTime - lastFrameTime).count() / 1000.0f;
+			float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(currentFrameTime - lastFrameTime).count() / 1000000.0f;
 			lastFrameTime = currentFrameTime;
 
 			float fixedDeltaTime = 0.01f;

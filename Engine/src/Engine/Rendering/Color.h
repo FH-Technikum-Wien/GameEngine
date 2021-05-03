@@ -10,10 +10,10 @@ namespace Engine
 	class ENGINE_API Color
 	{
 	private:
-		Vector<unsigned char> m_vector = Vector<unsigned char>(4);
+		Vector<float> m_vector = Vector<float>(4);
 
 	public:
-		Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255);
+		Color(float r, float g, float b, float a = 1.0f);
 
 		Color();
 
@@ -21,13 +21,15 @@ namespace Engine
 
 		Color& operator=(Color other);
 
+		const Color& GetAs255() const;
+
 		~Color() = default;
 
 	public:
-		unsigned char& R;
-		unsigned char& G;
-		unsigned char& B;
-		unsigned char& A;
+		float& R;
+		float& G;
+		float& B;
+		float& A;
 	};
 }
 

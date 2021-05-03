@@ -30,7 +30,8 @@ namespace Engine::Rendering::Texts
 	void Text::SetColor(const Color& color)
 	{
 		m_color = color;
-		m_text.setFillColor(sf::Color(color.R, color.G, color.B, color.A));
+		Color colorAs255 = color.GetAs255();
+		m_text.setFillColor(sf::Color(colorAs255.R, colorAs255.G, colorAs255.B, colorAs255.A));
 	}
 
 	const Color& Text::GetColor() const
@@ -43,7 +44,7 @@ namespace Engine::Rendering::Texts
 	{
 		if (!m_font.loadFromFile(pathToFont))
 		{
-			LOG_CORE_ERROR("Couldn't find font.");
+			LOG_CORE_ERROR("Couldn't load font from: " + pathToFont);
 			return;
 		}
 

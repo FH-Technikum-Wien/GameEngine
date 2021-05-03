@@ -35,11 +35,6 @@ project "Engine"
 	{
 		"%{prj.name}/ThirdParty/sfml/lib"
 	}
-	
-	links
-	{
-		"sfml-graphics", "sfml-window", "sfml-system"
-	}
 
 	filter "system:windows"
 		cppdialect "C++17"
@@ -55,20 +50,36 @@ project "Engine"
 		postbuildcommands
 		{
 			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
-			("{COPY} ThirdParty/sfml/bin ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} ThirdParty/sfml/bin ../bin/" .. outputdir .. "/Sandbox"),
+			("{COPY} ../Resources ../bin/" .. outputdir .. "/Sandbox")
 		}
 
 		filter "configurations:Debug"
 			defines "ENGINE_DEBUG"
 			symbols "On"
+			
+			links
+			{
+				"sfml-graphics-d", "sfml-window-d", "sfml-system-d"
+			}
 
 		filter "configurations:Release"
 			defines "ENGINE_RELEASE"
 			optimize "On"
+			
+			links
+			{
+				"sfml-graphics", "sfml-window", "sfml-system"
+			}
 
 		filter "configurations:Dist"
 			defines "ENGINE_DIST"
 			optimize "On"
+			
+			links
+			{
+				"sfml-graphics", "sfml-window", "sfml-system"
+			}
 
 project "Sandbox"
 	location "Sandbox"
@@ -99,7 +110,7 @@ project "Sandbox"
 	
 	links
 	{
-		"Engine", "sfml-graphics", "sfml-window", "sfml-system"
+		"Engine"
 	}
 
 	filter "system:windows"
@@ -115,11 +126,26 @@ project "Sandbox"
 		filter "configurations:Debug"
 			defines "ENGINE_DEBUG"
 			symbols "On"
+			
+			links
+			{
+				"sfml-graphics-d", "sfml-window-d", "sfml-system-d"
+			}
 
 		filter "configurations:Release"
 			defines "ENGINE_RELEASE"
 			optimize "On"
+			
+			links
+			{
+				"sfml-graphics", "sfml-window", "sfml-system"
+			}
 
 		filter "configurations:Dist"
 			defines "ENGINE_DIST"
 			optimize "On"
+			
+			links
+			{
+				"sfml-graphics", "sfml-window", "sfml-system"
+			}

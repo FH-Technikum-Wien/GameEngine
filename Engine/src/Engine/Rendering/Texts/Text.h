@@ -28,7 +28,7 @@ namespace Engine::Rendering::Texts
         sf::Text m_text;
         sf::Font m_font;
 
-        const std::string DEFAULT_FONT_PATH = "Fonts\\Roboto\\Roboto-Regular.ttf";
+        const std::string DEFAULT_FONT_PATH = "Fonts\\Roboto\\Roboto-Light.ttf";
     };
 }
 

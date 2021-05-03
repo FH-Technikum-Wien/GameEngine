@@ -28,7 +28,8 @@ namespace Engine::Rendering::Shapes
 	void Rectangle::SetColor(const Color& color)
 	{
 		m_color = color;
-		m_shape.setFillColor(sf::Color(color.R, color.G, color.B, color.A));
+		Color colorAs255 = color.GetAs255();
+		m_shape.setFillColor(sf::Color(colorAs255.R, colorAs255.G, colorAs255.B, colorAs255.A));
 	}
 
 	const Color& Rectangle::GetColor() const
