@@ -2,11 +2,11 @@
 
 namespace Engine::Rendering::Shapes
 {
-	Rectangle::Rectangle(const Vector2& position, const Vector2& size, const Color& color) : m_position(position), m_color(color)
+	Rectangle::Rectangle(const Vector2& position, const Vector2& size, const Color& color)
 	{
-		m_shape.setPosition(position.X, position.Y);
-		m_shape.setSize(sf::Vector2f(size.X, size.Y));
-		m_shape.setFillColor(sf::Color(color.R, color.G, color.B, color.A));
+		SetPosition(position);
+		SetSize(size);
+		SetColor(color);
 	}
 
 	void Rectangle::Draw(sf::RenderWindow* window) const
@@ -34,5 +34,16 @@ namespace Engine::Rendering::Shapes
 	const Color& Rectangle::GetColor() const
 	{
 		return m_color;
+	}
+
+	void Rectangle::SetSize(const Vector2& size)
+	{
+		m_size = size;
+		m_shape.setSize(sf::Vector2f(size.X, size.Y));
+	}
+
+	const Vector2& Rectangle::GetSize() const
+	{
+		return m_size;
 	}
 }

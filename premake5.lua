@@ -54,7 +54,8 @@ project "Engine"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
+			("{COPY} ThirdParty/sfml/bin ../bin/" .. outputdir .. "/Sandbox")
 		}
 
 		filter "configurations:Debug"
@@ -93,12 +94,12 @@ project "Sandbox"
 
 	libdirs 
 	{
-		"Engine", "%{prj.name}/ThirdParty/sfml/lib"
+		"Engine/ThirdParty/sfml/lib"
 	}
 	
 	links
 	{
-		"sfml-graphics", "sfml-window", "sfml-system"
+		"Engine", "sfml-graphics", "sfml-window", "sfml-system"
 	}
 
 	filter "system:windows"

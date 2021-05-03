@@ -17,8 +17,12 @@ namespace Engine::Rendering::Shapes
 		void SetColor(const Color& position) override;
 		const Color& GetColor() const override;
 
+		void SetSize(const Vector2& size);
+		const Vector2& GetSize() const;
+
 	private:
 		Vector2 m_position;
+		Vector2 m_size;
 		Color m_color;
 		sf::RectangleShape m_shape;
 	};

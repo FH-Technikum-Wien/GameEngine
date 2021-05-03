@@ -7,9 +7,32 @@ namespace Engine::Rendering
 		m_sfWindow = new sf::RenderWindow(sf::VideoMode(width, height), title.c_str());
 	}
 
-	void RenderWindow::Render(Drawable* drawable)
+	void RenderWindow::Draw(Drawable* drawable)
 	{
 		drawable->Draw(m_sfWindow);
+	}
+
+	void RenderWindow::Show()
+	{
+		m_sfWindow->display();
+	}
+
+	void RenderWindow::Clear()
+	{
+		m_sfWindow->clear();
+	}
+
+	bool RenderWindow::PollEvent(Event& event)
+	{
+		sf::Event sfEvent;
+		bool polled = m_sfWindow->pollEvent(sfEvent);
+		event.type = static_cast<EventType>(sfEvent.type);
+		return polled;
+	}
+
+	void RenderWindow::Close()
+	{
+		m_sfWindow->close();
 	}
 
 }

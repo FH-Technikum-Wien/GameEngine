@@ -15,6 +15,10 @@ namespace Engine {
 		void Run();
 
 	protected:
+		virtual void Update(float deltaTime);
+		virtual void FixedUpdate(float fixedDeltaTime);
+
+	protected:
 		std::unique_ptr<Rendering::RenderSystem> m_renderSystem = std::make_unique<Rendering::RenderSystem>();
 	};
 

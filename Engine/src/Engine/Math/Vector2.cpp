@@ -12,6 +12,10 @@ namespace Engine
 	{
 	}
 
+	Vector2::Vector2() : Vector2::Vector2(0, 0)
+	{
+	}
+
 	Vector2::Vector2(const Vector2& other) : m_vector(other.m_vector), X(m_vector[0]), Y(m_vector[1])
 	{
 	}

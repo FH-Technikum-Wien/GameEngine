@@ -13,6 +13,7 @@ namespace Engine
 	public:
 		Vector2(float x, float y);
 		Vector2(float value);
+		Vector2();
 		Vector2(const Vector2& other);
 
 		Vector2& operator=(Vector2 other);

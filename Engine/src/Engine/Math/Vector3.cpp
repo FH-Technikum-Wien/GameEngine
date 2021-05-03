@@ -13,6 +13,10 @@ namespace Engine
 	{
 	}
 
+	Vector3::Vector3() : Vector3::Vector3(0, 0, 0)
+	{
+	}
+
 	Vector3::Vector3(const Vector3& other) : m_vector(other.m_vector), X(m_vector[0]), Y(m_vector[1]), Z(m_vector[2])
 	{
 	}

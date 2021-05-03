@@ -9,10 +9,22 @@ namespace Engine::Rendering
 
 	void RenderSystem::Render() const
 	{
+		RenderWindow::Event event;
+		while (m_window->PollEvent(event))
+		{
+			if (event.type == RenderWindow::EventType::CLOSE)
+				m_window->Close();
+		}
+
+		m_window->Clear();
+
+
 		for (Drawable* drawable : m_drawables)
 		{
-			m_window->Render(drawable);
+			m_window->Draw(drawable);
 		}
+
+		m_window->Show();
 	}
 
 	void RenderSystem::AddDrawable(Drawable* drawable)

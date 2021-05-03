@@ -10,9 +10,23 @@ namespace Engine::Rendering
 	class ENGINE_API RenderWindow
 	{
 	public:
+		enum EventType
+		{
+			CLOSE
+		};
+		struct Event
+		{
+			EventType type;
+		};
+
+	public:
 		RenderWindow(unsigned int width, unsigned int height, const std::string& title);
 
-		void Render(Drawable* drawable);
+		void Draw(Drawable* drawable);
+		void Show();
+		void Clear();
+		bool PollEvent(Event& event);
+		void Close();
 
 	private:
 		sf::RenderWindow* m_sfWindow;
