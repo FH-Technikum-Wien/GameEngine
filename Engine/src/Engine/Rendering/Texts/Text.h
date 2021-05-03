@@ -2,10 +2,11 @@
 #include "../../Core.h"
 #include "../Drawable.h"
 #include "../../Logging/Log.h"
+#include "../../Physics/Transformable.h"
 
 namespace Engine::Rendering::Texts
 {
-    class ENGINE_API Text : public Drawable
+    class ENGINE_API Text : public Drawable, public Physics::Transformable
     {
     public:
         Text(const Vector2& position, const Color& color, const std::string& text, unsigned int fontSize);
@@ -21,6 +22,23 @@ namespace Engine::Rendering::Texts
         void SetFont(const std::string& pathToFont);
         void SetFontSize(unsigned int fontSize);
         void SetText(const std::string& text);
+
+        void Transform(const float fixedDeltaTime) override
+        {
+        };
+
+        void InterpolateLastPosition(const float alpha) override
+        {
+        };
+
+        void SetVelocity(const Vector2& velocity) override
+        {
+        };
+
+        const Vector2& GetVelocity() const override
+        {
+            return Vector2();
+        };
 
     private:
         Vector2 m_position;

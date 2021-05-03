@@ -23,7 +23,8 @@ namespace Engine {
 		std::unique_ptr<Rendering::RenderSystem> m_renderSystem = std::make_unique<Rendering::RenderSystem>();
 		std::unique_ptr<Physics::PhysicsSystem> m_phyisicsSystem = std::make_unique<Physics::PhysicsSystem>();
 
-		const float FIXED_DELTA_TIME = 0.01f;
+		const float FIXED_DELTA_TIME = 1.0f / 50.0f;
+		const float UPDATE_LIMIT = 1.0f / 60.0f;
 	};
 
 	// Needs to be defined in the Client/Application

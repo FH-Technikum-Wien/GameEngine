@@ -65,7 +65,7 @@ project "Engine"
 
 		filter "configurations:Release"
 			defines "ENGINE_RELEASE"
-			optimize "On"
+			optimize "Off"
 			
 			links
 			{
@@ -74,7 +74,7 @@ project "Engine"
 
 		filter "configurations:Dist"
 			defines "ENGINE_DIST"
-			optimize "On"
+			optimize "Off"
 			
 			links
 			{

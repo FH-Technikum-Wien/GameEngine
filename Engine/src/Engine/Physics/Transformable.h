@@ -5,6 +5,9 @@
 
 namespace Engine::Physics
 {
+	/// <summary>
+	/// Required to transform an object.
+	/// </summary>
 	class ENGINE_API Transformable
 	{
 	public:
@@ -13,17 +16,13 @@ namespace Engine::Physics
 		/// </summary>
 		/// <param name="fixedDeltaTime">- The fixed delta time for the physics calculation.</param>
 		/// <param name="alpha">- The interpolation factor for the transformation.</param>
-		virtual void Transform(const float fixedDeltaTime, const float alpha) = 0;
+		virtual void Transform(const float fixedDeltaTime) = 0;
 
 		/// <summary>
-		/// Sets the position of the object.
+		/// Interpolates with the last position to prevent stutter, due to different frame rates between the PhysicsSystem and the RenderSystem.
 		/// </summary>
-		virtual void SetPosition(const Vector2& position) = 0;
-
-		/// <summary>
-		/// Returns the position of the transformable.
-		/// </summary>
-		virtual const Vector2& GetPosition() const = 0;
+		/// <param name="alpha">- The interpolation factor.</param>
+		virtual void InterpolateLastPosition(const float alpha) = 0;
 
 		/// <summary>
 		/// Sets the velocity of the transformable.
@@ -34,5 +33,17 @@ namespace Engine::Physics
 		/// Returns the velocity of the transformable.
 		/// </summary>
 		virtual const Vector2& GetVelocity() const = 0;
+
+		/// <summary>
+		/// Sets the position of the object.
+		/// </summary>
+		virtual void SetPosition(const Vector2& position) = 0;
+
+		/// <summary>
+		/// Returns the position of the transformable.
+		/// </summary>
+		virtual const Vector2& GetPosition() const = 0;		
+
+		
 	};
 }

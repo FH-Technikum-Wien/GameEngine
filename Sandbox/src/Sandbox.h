@@ -27,9 +27,11 @@ private:
 
 	Engine::Rendering::Texts::Text* m_deltaTimeText;
 	Engine::Rendering::Texts::Text* m_frameRateText;
+	Engine::Rendering::Texts::Text* m_updateDeltaTime;
 
 	Engine::Rendering::Texts::Text* m_deltaTimeFixedText;
 	Engine::Rendering::Texts::Text* m_frameRateFixedText;
+	Engine::Rendering::Texts::Text* m_fixedUpdateDeltaTimeText;
 
 
 	float m_frameRate = 0.0f;

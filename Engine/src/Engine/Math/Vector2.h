@@ -18,6 +18,10 @@ namespace Engine
 
 		Vector2& operator=(Vector2 other);
 
+		Vector2 operator*(float scalar);
+
+		Vector2 operator+(const Vector2& other);
+
 		~Vector2() = default;
 
 	public:

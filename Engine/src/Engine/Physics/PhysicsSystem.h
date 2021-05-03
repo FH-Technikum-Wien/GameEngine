@@ -12,7 +12,10 @@ namespace Engine::Physics
 		PhysicsSystem();
 		~PhysicsSystem();
 
-		void Update(const float fixedDeltaTime, const float alpha);
+		void Update(const float fixedDeltaTime);
+		void InterpolateLastPosition(const float alpha);
+
+		void Add(Transformable* transformable);
 
 	private:
 		std::vector<Transformable*> m_transformable = std::vector<Transformable*>();

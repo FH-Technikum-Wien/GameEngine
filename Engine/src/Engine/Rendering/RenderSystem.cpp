@@ -7,7 +7,7 @@ namespace Engine::Rendering
 		m_window = new RenderWindow(width, height, title);
 	}
 
-	void RenderSystem::Render() const
+	void RenderSystem::UpdateWindow() const
 	{
 		RenderWindow::Event event;
 		while (m_window->PollEvent(event))
@@ -15,9 +15,11 @@ namespace Engine::Rendering
 			if (event.type == RenderWindow::EventType::CLOSE)
 				m_window->Close();
 		}
+	}
 
+	void RenderSystem::Render() const
+	{
 		m_window->Clear();
-
 
 		for (Drawable* drawable : m_drawables)
 		{
@@ -27,7 +29,7 @@ namespace Engine::Rendering
 		m_window->Show();
 	}
 
-	void RenderSystem::AddDrawable(Drawable* drawable)
+	void RenderSystem::Add(Drawable* drawable)
 	{
 		m_drawables.push_back(drawable);
 	}

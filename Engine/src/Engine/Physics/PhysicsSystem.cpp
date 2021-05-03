@@ -10,11 +10,24 @@ namespace Engine::Physics
 	{
 	}
 
-	void PhysicsSystem::Update(const float fixedDeltaTime, const float alpha)
+	void PhysicsSystem::Update(const float fixedDeltaTime)
 	{
 		for (Transformable* transformable : m_transformable)
 		{
-			transformable->Transform(fixedDeltaTime, alpha);
+			transformable->Transform(fixedDeltaTime);
 		}
+	}
+
+	void PhysicsSystem::InterpolateLastPosition(const float alpha)
+	{
+		for (Transformable* transformable : m_transformable)
+		{
+			transformable->InterpolateLastPosition(alpha);
+		}
+	}
+
+	void PhysicsSystem::Add(Transformable* transformable)
+	{
+		m_transformable.push_back(transformable);
 	}
 }

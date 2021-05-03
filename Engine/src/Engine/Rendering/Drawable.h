@@ -7,6 +7,9 @@
 
 namespace Engine::Rendering
 {
+	/// <summary>
+	/// Required to draw an object.
+	/// </summary>
 	class ENGINE_API Drawable
 	{
 	public:
@@ -15,10 +18,14 @@ namespace Engine::Rendering
 		/// </summary>
 		virtual void Draw(sf::RenderWindow* window) const = 0;
 
-		virtual void SetPosition(const Vector2& position) = 0;
-		virtual const Vector2& GetPosition() const = 0;
-
+		/// <summary>
+		/// Sets the color of the drawable.
+		/// </summary>
 		virtual void SetColor(const Color& position) = 0;
+
+		/// <summary>
+		/// Gets the color of the drawable.
+		/// </summary>
 		virtual const Color& GetColor() const = 0;
 	};
 }

@@ -16,13 +16,37 @@ namespace Engine::Rendering::Shapes
 
 	void Rectangle::SetPosition(const Vector2& position)
 	{
+		m_previousPosition = position;
 		m_position = position;
 		m_shape.setPosition(position.X, position.Y);
-	}	
+	}
 
 	const Vector2& Rectangle::GetPosition() const
 	{
 		return m_position;
+	}
+
+	void Rectangle::Transform(const float fixedDeltaTime)
+	{
+		m_previousPosition = m_position;
+		m_position = m_position + m_velocity * fixedDeltaTime;
+		m_shape.setPosition(m_position.X, m_position.Y);
+	}
+
+	void Rectangle::InterpolateLastPosition(const float alpha)
+	{
+		m_position = m_position * alpha + (m_previousPosition * (1.0f - alpha));
+		m_shape.setPosition(m_position.X, m_position.Y);
+	}
+
+	void Rectangle::SetVelocity(const Vector2& velocity)
+	{
+		m_velocity = velocity;
+	}
+
+	const Vector2& Rectangle::GetVelocity() const
+	{
+		return m_velocity;
 	}
 
 	void Rectangle::SetColor(const Color& color)
