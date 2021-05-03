@@ -7,6 +7,9 @@ namespace Engine
 {
 	class ENGINE_API Vector2
 	{
+	private:
+		Vector<float> m_vector = Vector<float>(2);
+
 	public:
 		Vector2(float x, float y);
 		Vector2(float value);
@@ -19,8 +22,5 @@ namespace Engine
 	public:
 		float& X;
 		float& Y;		
-
-	private:
-		Vector<float> m_vector = Vector<float>(2);
 	};
 }

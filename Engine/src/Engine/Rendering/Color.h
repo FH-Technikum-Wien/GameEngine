@@ -5,14 +5,15 @@
 
 #include <cstdint>
 
-typedef std::uint8_t uint8;
-
 namespace Engine
 {
 	class ENGINE_API Color
 	{
+	private:
+		Vector<unsigned char> m_vector = Vector<unsigned char>(4);
+
 	public:
-		Color(uint8 r, uint8 g, uint8 b, uint8 a = 255);
+		Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 255);
 		Color(const Color& other);
 
 		Color& operator=(Color other);
@@ -20,13 +21,10 @@ namespace Engine
 		~Color() = default;
 
 	public:
-		uint8& R;
-		uint8& G;
-		uint8& B;
-		uint8& A;
-
-	private:
-		Vector<uint8> m_vector = Vector<uint8>(4);
+		unsigned char& R;
+		unsigned char& G;
+		unsigned char& B;
+		unsigned char& A;
 	};
 }
 

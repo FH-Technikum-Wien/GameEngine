@@ -1,6 +1,8 @@
 #pragma once
-
 #include "Core.h"
+
+#include <memory>
+#include "Rendering/RenderSystem.h"
 
 namespace Engine {
 
@@ -11,6 +13,9 @@ namespace Engine {
 		virtual ~Application();
 
 		void Run();
+
+	protected:
+		std::unique_ptr<Rendering::RenderSystem> m_renderSystem = std::make_unique<Rendering::RenderSystem>();
 	};
 
 	// Needs to be defined in the Client/Application

@@ -26,7 +26,19 @@ project "Engine"
 
 	includedirs
 	{
-		"%{prj.name}/ThirdParty/spdlog/include"
+		"%{prj.name}/ThirdParty/spdlog/include",
+		"%{prj.name}/ThirdParty/sfml/include",
+		"%{prj.name}/ThirdParty/vector"
+	}
+	
+	libdirs
+	{
+		"%{prj.name}/ThirdParty/sfml/lib"
+	}
+	
+	links
+	{
+		"sfml-graphics", "sfml-window", "sfml-system"
 	}
 
 	filter "system:windows"
@@ -73,13 +85,20 @@ project "Sandbox"
 
 	includedirs
 	{
+		"Engine/src",
 		"Engine/ThirdParty/spdlog/include",
-		"Engine/src"
+		"Engine/ThirdParty/sfml/include",
+		"Engine/ThirdParty/vector"
 	}
 
-	links 
+	libdirs 
 	{
-		"Engine"
+		"Engine", "%{prj.name}/ThirdParty/sfml/lib"
+	}
+	
+	links
+	{
+		"sfml-graphics", "sfml-window", "sfml-system"
 	}
 
 	filter "system:windows"
