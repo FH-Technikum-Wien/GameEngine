@@ -21,7 +21,7 @@ namespace Engine
 
 		Color& operator=(Color other);
 
-		const Color& GetAs255() const;
+		Color GetAs255() const;
 
 		~Color() = default;
 

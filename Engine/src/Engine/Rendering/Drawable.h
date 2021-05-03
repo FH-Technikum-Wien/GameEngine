@@ -10,6 +10,9 @@ namespace Engine::Rendering
 	class ENGINE_API Drawable
 	{
 	public:
+		/// <summary>
+		/// Draws the object with the given render window.
+		/// </summary>
 		virtual void Draw(sf::RenderWindow* window) const = 0;
 
 		virtual void SetPosition(const Vector2& position) = 0;

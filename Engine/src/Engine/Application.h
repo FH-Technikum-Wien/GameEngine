@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "Rendering/RenderSystem.h"
+#include "Physics/PhysicsSystem.h"
 
 namespace Engine {
 
@@ -20,6 +21,9 @@ namespace Engine {
 
 	protected:
 		std::unique_ptr<Rendering::RenderSystem> m_renderSystem = std::make_unique<Rendering::RenderSystem>();
+		std::unique_ptr<Physics::PhysicsSystem> m_phyisicsSystem = std::make_unique<Physics::PhysicsSystem>();
+
+		const float FIXED_DELTA_TIME = 0.01f;
 	};
 
 	// Needs to be defined in the Client/Application

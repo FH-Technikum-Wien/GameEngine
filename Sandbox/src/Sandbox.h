@@ -14,24 +14,37 @@ public:
 	};
 
 	void Update(float deltaTime) override;
+	void FixedUpdate(float fixedDeltaTime) override;
 
 private:
 	void MoveRectangle(float deltaTime);
-	void CalculateFPS(float deltaTime);
+	void CalculateFPS(std::chrono::steady_clock::time_point& lastFrameTime, float& deltaTimeSum, unsigned int& frames, float& frameRate, float& frameTime);
 
 private:
 	Engine::Rendering::Shapes::Rectangle* m_movingRect;
-	Engine::Rendering::Texts::Text* m_deltaTime;
-	Engine::Rendering::Texts::Text* m_frameRate;
-
+	Engine::Color m_color;
 	bool goRight = true;
 
-	float fpsDeltaTime = 0.0f;
-	unsigned int fpsFrames = 0;
-	float fpsFrameRate = 0.0f;
-	double fpsAverageFrameTime = 0.0f;
-	Engine::Color m_color;
+	Engine::Rendering::Texts::Text* m_deltaTimeText;
+	Engine::Rendering::Texts::Text* m_frameRateText;
+
+	Engine::Rendering::Texts::Text* m_deltaTimeFixedText;
+	Engine::Rendering::Texts::Text* m_frameRateFixedText;
+
+
+	float m_frameRate = 0.0f;
+	float m_frameRateFixed = 0.0f;
+	float m_deltaTimeSum = 0.0f;
+	float m_deltaTimeSumFixed = 0.0f;
+	float m_frameTime = 0.0f;
+	float m_frameTimeFixed = 0.0f;
+	unsigned int m_frames = 0;
+	unsigned int m_framesFixed = 0;
+
 	const float PI = 3.14159265f;
+	std::chrono::high_resolution_clock clock;
+	std::chrono::steady_clock::time_point lastFrameTime = clock.now();
+	std::chrono::steady_clock::time_point lastFrameTimeFixed = clock.now();
 };
 
 Engine::Application* Engine::CreateApplication()

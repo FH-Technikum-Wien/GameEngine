@@ -16,23 +16,37 @@ namespace Engine
 
 	void Application::Run()
 	{
-		LOG_TRACE("Application Running.");
+		LOG_TRACE("Application Run");
 		std::chrono::high_resolution_clock clock;
 		auto lastFrameTime = clock.now();
+
+		float leftOver = 0.0f;
 		while (1)
 		{
-			// Calculate deltaTime
+			// Calculate deltaTime in seconds
 			auto currentFrameTime = clock.now();
 			float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(currentFrameTime - lastFrameTime).count() / 1000000.0f;
 			lastFrameTime = currentFrameTime;
 
-			float fixedDeltaTime = 0.01f;
+			// Produced time that FixedUpdate consumes 
+			leftOver += deltaTime;
+			// Repeat physics updates as long as there is time remaining
+			while (leftOver >= FIXED_DELTA_TIME)
+			{
+				// Calculate internal physics
+				m_phyisicsSystem->Update(FIXED_DELTA_TIME, leftOver / FIXED_DELTA_TIME);
 
-			// Execute User Updates
+				// Execute FixedUpdate
+				FixedUpdate(FIXED_DELTA_TIME);
+
+				// Reduce leftOver by used time
+				leftOver -= FIXED_DELTA_TIME;
+			}
+
+			// Execute Update
 			Update(deltaTime);
-			FixedUpdate(fixedDeltaTime);
 
-			// Update systems
+			// Render everything
 			m_renderSystem->Render();
 		}
 	}

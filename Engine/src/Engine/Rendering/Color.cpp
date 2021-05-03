@@ -23,7 +23,7 @@ namespace Engine
 		m_vector = other.m_vector;
 		return *this;
 	}
-	const Color& Color::GetAs255() const
+	Color Color::GetAs255() const
 	{
 		return Color(R * 255, G * 255, B * 255, A * 255);
 	}

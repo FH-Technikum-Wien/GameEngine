@@ -5,26 +5,51 @@ Sandbox::Sandbox()
 {
 	m_renderSystem->InitializeWindow(1024, 512, "Engine");
 
-	Engine::Rendering::Texts::Text* text = new Engine::Rendering::Texts::Text(Engine::Vector2(384,50), Engine::Color(1.0f,1.0f,1.0f), "ENGINE", 72);
+	// Title
+	Engine::Rendering::Texts::Text* text = new Engine::Rendering::Texts::Text(Engine::Vector2(384, 50), Engine::Color(1.0f, 1.0f, 1.0f), "ENGINE", 72);
 	m_renderSystem->AddDrawable(text);
+	// Flying rectangle
 
 	m_movingRect = new Engine::Rendering::Shapes::Rectangle(Engine::Vector2(256, 256), Engine::Vector2(64, 64), Engine::Color(1.0f, 0, 0, 1.0f));
 	m_renderSystem->AddDrawable(m_movingRect);
 
-	m_deltaTime = new Engine::Rendering::Texts::Text(Engine::Vector2(0, 40), Engine::Color(1.0f, 1.0f, 1.0f), "0", 36);
-	m_renderSystem->AddDrawable(m_deltaTime);
-	m_frameRate = new Engine::Rendering::Texts::Text(Engine::Vector2(0, 0), Engine::Color(1.0f, 1.0f, 1.0f), "0", 36);
-	m_renderSystem->AddDrawable(m_frameRate);
+	// Update FPS
+	text = new Engine::Rendering::Texts::Text(Engine::Vector2(0, 0), Engine::Color(1.0f, 1.0f, 1.0f), "Update", 25);
+	m_renderSystem->AddDrawable(text);
+	m_frameRateText = new Engine::Rendering::Texts::Text(Engine::Vector2(0, 40), Engine::Color(1.0f, 1.0f, 1.0f), "0", 20);
+	m_renderSystem->AddDrawable(m_frameRateText);
+	m_deltaTimeText = new Engine::Rendering::Texts::Text(Engine::Vector2(0, 60), Engine::Color(1.0f, 1.0f, 1.0f), "0", 20);
+	m_renderSystem->AddDrawable(m_deltaTimeText);
+
+	// FixedUpdate FPS
+	text = new Engine::Rendering::Texts::Text(Engine::Vector2(0, 100), Engine::Color(1.0f, 1.0f, 1.0f), "FixedUpdate", 25);
+	m_renderSystem->AddDrawable(text);
+	m_frameRateFixedText = new Engine::Rendering::Texts::Text(Engine::Vector2(0, 140), Engine::Color(1.0f, 1.0f, 1.0f), "0", 20);
+	m_renderSystem->AddDrawable(m_frameRateFixedText);
+	m_deltaTimeFixedText = new Engine::Rendering::Texts::Text(Engine::Vector2(0, 160), Engine::Color(1.0f, 1.0f, 1.0f), "0", 20);
+	m_renderSystem->AddDrawable(m_deltaTimeFixedText);
 }
 
 void Sandbox::Update(float deltaTime)
 {
-	CalculateFPS(deltaTime);
+	CalculateFPS(lastFrameTime, m_deltaTimeSum, m_frames, m_frameRate, m_frameTime);
 
-	m_deltaTime->SetText(std::to_string(fpsAverageFrameTime));
-	m_frameRate->SetText(std::to_string((int)fpsFrameRate));
+	m_frameRateText->SetText("FPS: " + std::to_string((int)m_frameRate));
+	m_deltaTimeText->SetText("FrameTime: " + std::to_string(m_frameTime));
 
-	MoveRectangle(deltaTime);
+	//std::this_thread::sleep_for(std::chrono::milliseconds(100));
+}
+
+void Sandbox::FixedUpdate(float fixedDeltaTime)
+{
+	CalculateFPS(lastFrameTimeFixed, m_deltaTimeSumFixed, m_framesFixed, m_frameRateFixed, m_frameTimeFixed);
+
+	m_frameRateFixedText->SetText("FPS: " + std::to_string((int)m_frameRateFixed));
+	m_deltaTimeFixedText->SetText("FrameTime: " + std::to_string(m_frameTimeFixed));
+
+	MoveRectangle(fixedDeltaTime);
+
+	//std::this_thread::sleep_for(std::chrono::milliseconds(8));
 }
 
 void Sandbox::MoveRectangle(float deltaTime)
@@ -45,17 +70,21 @@ void Sandbox::MoveRectangle(float deltaTime)
 	m_movingRect->SetColor(Engine::Color(sin(m_color.R), sin(m_color.G), sin(m_color.B)));
 }
 
-void Sandbox::CalculateFPS(float deltaTime)
+void Sandbox::CalculateFPS(std::chrono::steady_clock::time_point& lastFrameTime, float& deltaTimeSum, unsigned int& frames, float& frameRate, float& frameTime)
 {
-	fpsDeltaTime += deltaTime;
-	++fpsFrames;
+	auto currentFrameTime = clock.now();
+	float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(currentFrameTime - lastFrameTime).count() / 1000000.0f;
+	lastFrameTime = currentFrameTime;
+
+	deltaTimeSum += deltaTime;
+	++frames;
 
 	// Update every second
-	if (fpsDeltaTime > 1.0f)
+	if (deltaTimeSum > 1.0f)
 	{
-		fpsFrameRate = fpsFrames;
-		fpsFrames = 0;
-		fpsDeltaTime = 0;
-		fpsAverageFrameTime = 1.0f / (fpsFrameRate == 0 ? 0.001f : fpsFrameRate);
+		frameRate = frames;
+		frames = 0;
+		deltaTimeSum = 0;
+		frameTime = 1.0f / (frameRate == 0 ? 0.001f : frameRate);
 	}
 }
