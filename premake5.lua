@@ -26,7 +26,20 @@ project "Engine"
 
 	includedirs
 	{
-		"%{prj.name}/ThirdParty/spdlog/include"
+		"%{prj.name}/ThirdParty/spdlog/include",
+		"%{prj.name}/ThirdParty/opengl/include",
+		"%{prj.name}/ThirdParty/opengl/glad",
+		"%{prj.name}/ThirdParty/vector"
+	}
+	
+	libdirs
+	{
+		"%{prj.name}/ThirdParty/opengl/lib"
+	}
+	
+	links
+	{
+		"opengl32", "glfw3"
 	}
 
 	filter "system:windows"
@@ -42,7 +55,8 @@ project "Engine"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox"),
+			("{COPY} ThirdParty/opengl/bin ../bin/" .. outputdir .. "/Sandbox")
 		}
 
 		filter "configurations:Debug"
@@ -73,13 +87,21 @@ project "Sandbox"
 
 	includedirs
 	{
+		"Engine/src",
 		"Engine/ThirdParty/spdlog/include",
-		"Engine/src"
+		"Engine/ThirdParty/opengl/include",
+		"Engine/ThirdParty/opengl/glad",
+		"Engine/ThirdParty/vector"
+	}
+	
+	libdirs
+	{
+		"Engine/ThirdParty/opengl/lib"
 	}
 
 	links 
 	{
-		"Engine"
+		"Engine", "opengl32", "glfw3"
 	}
 
 	filter "system:windows"

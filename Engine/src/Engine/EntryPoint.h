@@ -9,8 +9,9 @@ int main(int argc, char** argv)
 {
 	// TODO: Move to ENGINE INIT
 	Engine::Log::Init();
-	LOG_CORE_INFO("Engine Startup");
+	LOG_CORE_INFO("Engine Startup.");
 
+	LOG_INFO("Application Startup.");
 	Engine::Application* application = Engine::CreateApplication();
 	application->Run();
 	delete application;

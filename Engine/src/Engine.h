@@ -5,7 +5,6 @@
 * Combines multiple includes
 */
 
-
 #include <Engine/Application.h>
 #include <Engine/Logging/Log.h>
 
