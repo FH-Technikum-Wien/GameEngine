@@ -27,13 +27,12 @@ namespace Engine
 			// Calculate deltaTime in seconds
 			auto currentFrameTime = clock.now();
 			float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(currentFrameTime - lastFrameTime).count() / 1000000.0f;
-			lastFrameTime = currentFrameTime;
-
-			//if (deltaTime > 0.25f)
-			//	deltaTime = 0.25f;
+			//LOG_CORE_INFO(std::to_string(deltaTime));
+			lastFrameTime = currentFrameTime;				
 
 			// Produced time that FixedUpdate consumes 
 			fixedUpdateAccumulator += deltaTime;
+
 			// Repeat physics updates as long as there is time remaining or skip it
 			while (fixedUpdateAccumulator >= FIXED_DELTA_TIME)
 			{
@@ -45,9 +44,9 @@ namespace Engine
 
 				// Reduce leftOver by used time
 				fixedUpdateAccumulator -= FIXED_DELTA_TIME;
-			}			
+			}
 
-			// Compensate stutter due to different frame rates
+			
 			//m_phyisicsSystem->InterpolateLastPosition(fixedUpdateAccumulator / FIXED_DELTA_TIME);
 
 			// Update RenderWindow (polls events)
@@ -56,13 +55,13 @@ namespace Engine
 			updateAccumulator += deltaTime;
 			if (updateAccumulator >= UPDATE_LIMIT)
 			{
-				
-
 				// Execute Update
-				Update(deltaTime);
+				Update(updateAccumulator);
 
+				// Compensate stutter due to different frame rates
+				const float stateBlending = fixedUpdateAccumulator / FIXED_DELTA_TIME;
 				// Render everything
-				m_renderSystem->Render();
+				m_renderSystem->Render(stateBlending);
 
 				updateAccumulator = 0;
 			}

@@ -11,7 +11,7 @@ namespace Engine::Rendering::Texts
     public:
         Text(const Vector2& position, const Color& color, const std::string& text, unsigned int fontSize);
 
-        void Draw(sf::RenderWindow* window) const override;
+        void Draw(sf::RenderWindow* window, const float stateBlending) override;
 
         void SetPosition(const Vector2& position) override;
         const Vector2& GetPosition() const override;
@@ -24,10 +24,6 @@ namespace Engine::Rendering::Texts
         void SetText(const std::string& text);
 
         void Transform(const float fixedDeltaTime) override
-        {
-        };
-
-        void InterpolateLastPosition(const float alpha) override
         {
         };
 

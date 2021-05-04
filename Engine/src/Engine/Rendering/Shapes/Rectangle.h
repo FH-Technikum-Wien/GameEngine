@@ -10,7 +10,7 @@ namespace Engine::Rendering::Shapes
 	public:
 		Rectangle(const Vector2& position, const Vector2& size, const Color& color);
 
-		void Draw(sf::RenderWindow* window) const override;
+		void Draw(sf::RenderWindow* window, const float stateBlending) override;
 
 		void SetColor(const Color& position) override;
 		const Color& GetColor() const override;
@@ -19,8 +19,6 @@ namespace Engine::Rendering::Shapes
 		const Vector2& GetSize() const;
 
 		void Transform(const float fixedDeltaTime) override;
-
-		void InterpolateLastPosition(const float alpha) override;
 
 		void SetPosition(const Vector2& position) override;
 		const Vector2& GetPosition() const override;

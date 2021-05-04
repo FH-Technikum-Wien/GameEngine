@@ -9,9 +9,12 @@ namespace Engine::Rendering::Shapes
 		SetColor(color);
 	}
 
-	void Rectangle::Draw(sf::RenderWindow* window) const
+	void Rectangle::Draw(sf::RenderWindow* window, const float stateBlending)
 	{
+		Vector2 renderPosition = m_position * stateBlending + (m_previousPosition * (1.0f - stateBlending));
+		m_shape.setPosition(renderPosition.X, renderPosition.Y);
 		window->draw(m_shape);
+		m_shape.setPosition(m_position.X, m_position.Y);
 	}
 
 	void Rectangle::SetPosition(const Vector2& position)
@@ -30,12 +33,6 @@ namespace Engine::Rendering::Shapes
 	{
 		m_previousPosition = m_position;
 		m_position = m_position + m_velocity * fixedDeltaTime;
-		m_shape.setPosition(m_position.X, m_position.Y);
-	}
-
-	void Rectangle::InterpolateLastPosition(const float alpha)
-	{
-		m_position = m_position * alpha + (m_previousPosition * (1.0f - alpha));
 		m_shape.setPosition(m_position.X, m_position.Y);
 	}
 

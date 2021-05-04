@@ -11,7 +11,7 @@ namespace Engine::Rendering::Texts
 		SetFontSize(fontSize);
 	}
 
-	void Text::Draw(sf::RenderWindow* window) const
+	void Text::Draw(sf::RenderWindow* window, const float stateBlending)
 	{
 		window->draw(m_text);
 	}

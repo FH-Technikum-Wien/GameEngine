@@ -22,7 +22,7 @@ namespace Engine::Rendering
 	public:
 		RenderWindow(unsigned int width, unsigned int height, const std::string& title);
 
-		void Draw(Drawable* drawable);
+		void Draw(Drawable* drawable, const float stateBlending);
 		void Show();
 		void Clear();
 		bool PollEvent(Event& event);

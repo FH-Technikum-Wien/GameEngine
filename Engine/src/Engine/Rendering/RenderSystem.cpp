@@ -17,13 +17,13 @@ namespace Engine::Rendering
 		}
 	}
 
-	void RenderSystem::Render() const
+	void RenderSystem::Render(const float stateBlending) const
 	{
 		m_window->Clear();
 
 		for (Drawable* drawable : m_drawables)
 		{
-			m_window->Draw(drawable);
+			m_window->Draw(drawable, stateBlending);
 		}
 
 		m_window->Show();

@@ -1,6 +1,5 @@
 #pragma once
 #include "../Core.h"
-#include "../Math/Vector2.h"
 #include "Color.h"
 
 #include <SFML/Graphics.hpp>
@@ -16,7 +15,7 @@ namespace Engine::Rendering
 		/// <summary>
 		/// Draws the object with the given render window.
 		/// </summary>
-		virtual void Draw(sf::RenderWindow* window) const = 0;
+		virtual void Draw(sf::RenderWindow* window, const float stateBlending) = 0;
 
 		/// <summary>
 		/// Sets the color of the drawable.

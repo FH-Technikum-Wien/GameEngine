@@ -13,7 +13,6 @@ namespace Engine::Physics
 		~PhysicsSystem();
 
 		void Update(const float fixedDeltaTime);
-		void InterpolateLastPosition(const float alpha);
 
 		void Add(Transformable* transformable);
 

@@ -15,7 +15,7 @@ namespace Engine::Rendering
 		void InitializeWindow(unsigned int width, unsigned int height, const std::string& title);
 
 		void UpdateWindow() const;
-		void Render() const;
+		void Render(const float stateBlending) const;
 		void Add(Drawable* drawable);
 
 	private:

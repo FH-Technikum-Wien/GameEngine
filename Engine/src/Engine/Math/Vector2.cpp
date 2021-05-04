@@ -22,17 +22,17 @@ namespace Engine
 
 	Vector2& Vector2::operator=(Vector2 other)
 	{
-		m_vector = other.m_vector;
 		X = other.X;
 		Y = other.Y;
 		return *this;
 	}
 
-	Vector2 Vector2::operator*(float scalar)
+	Vector2 Vector2::operator*(float scalar) const
 	{
 		return Vector2(m_vector[0] * scalar, m_vector[1] * scalar);
 	}
-	Vector2 Vector2::operator+(const Vector2& other)
+
+	Vector2 Vector2::operator+(const Vector2& other) const
 	{
 		return Vector2(m_vector[0] + other.m_vector[0], m_vector[1] + other.m_vector[1]);
 	}

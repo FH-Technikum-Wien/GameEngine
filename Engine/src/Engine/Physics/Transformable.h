@@ -19,12 +19,6 @@ namespace Engine::Physics
 		virtual void Transform(const float fixedDeltaTime) = 0;
 
 		/// <summary>
-		/// Interpolates with the last position to prevent stutter, due to different frame rates between the PhysicsSystem and the RenderSystem.
-		/// </summary>
-		/// <param name="alpha">- The interpolation factor.</param>
-		virtual void InterpolateLastPosition(const float alpha) = 0;
-
-		/// <summary>
 		/// Sets the velocity of the transformable.
 		/// </summary>
 		virtual void SetVelocity(const Vector2& velocity) = 0;

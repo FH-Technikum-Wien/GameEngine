@@ -7,9 +7,9 @@ namespace Engine::Rendering
 		m_sfWindow = new sf::RenderWindow(sf::VideoMode(width, height), title.c_str());
 	}
 
-	void RenderWindow::Draw(Drawable* drawable)
+	void RenderWindow::Draw(Drawable* drawable, const float stateBlending)
 	{
-		drawable->Draw(m_sfWindow);
+		drawable->Draw(m_sfWindow, stateBlending);
 	}
 
 	void RenderWindow::Show()

@@ -44,6 +44,12 @@ void Sandbox::Update(float deltaTime)
 	m_deltaTimeText->SetText("FrameTime: " + std::to_string(m_frameTime));
 	m_updateDeltaTime->SetText("DeltaTime: " + std::to_string(deltaTime));
 
+	m_color.R += 1.0f * deltaTime;
+	m_color.G += 2.0f * deltaTime;
+	m_color.B += 3.0f * deltaTime;
+
+	m_movingRect->SetColor(Engine::Color(sin(m_color.R), sin(m_color.G), sin(m_color.B)));
+
 	//std::this_thread::sleep_for(std::chrono::milliseconds(100 / 6));
 }
 
@@ -68,11 +74,7 @@ void Sandbox::MoveRectangle(float deltaTime)
 	else if (position.X < 256)
 		m_movingRect->SetVelocity(Engine::Vector2(100.0f, 0.0f));
 	
-	m_color.R += 1.0f * deltaTime;
-	m_color.G += 2.0f * deltaTime;
-	m_color.B += 3.0f * deltaTime;
-
-	m_movingRect->SetColor(Engine::Color(sin(m_color.R), sin(m_color.G), sin(m_color.B)));
+	
 }
 
 void Sandbox::CalculateFPS(std::chrono::steady_clock::time_point& lastFrameTime, float& deltaTimeSum, unsigned int& frames, float& frameRate, float& frameTime)
