@@ -20,17 +20,16 @@ namespace Engine
 		std::chrono::high_resolution_clock clock;
 		auto lastFrameTime = clock.now();
 
-		float fixedUpdateAccumulator = 0.0f;
-		float updateAccumulator = 0.0f;
+		double fixedUpdateAccumulator = 0.0f;
+		double updateAccumulator = 0.0f;
 		while (1)
 		{
 			// Calculate deltaTime in seconds
 			auto currentFrameTime = clock.now();
-			float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(currentFrameTime - lastFrameTime).count() / 1000000.0f;
-			//LOG_CORE_INFO(std::to_string(deltaTime));
+			double deltaTime = std::chrono::duration_cast<std::chrono::nanoseconds>(currentFrameTime - lastFrameTime).count() / 1e9;
 			lastFrameTime = currentFrameTime;				
 
-			// Produced time that FixedUpdate consumes 
+			// Produced time that can be consumed 
 			fixedUpdateAccumulator += deltaTime;
 
 			// Repeat physics updates as long as there is time remaining or skip it
@@ -42,15 +41,12 @@ namespace Engine
 				// Execute FixedUpdate
 				FixedUpdate(FIXED_DELTA_TIME);
 
-				// Reduce leftOver by used time
+				// Reduce leftover time
 				fixedUpdateAccumulator -= FIXED_DELTA_TIME;
 			}
 
-			
-			//m_phyisicsSystem->InterpolateLastPosition(fixedUpdateAccumulator / FIXED_DELTA_TIME);
-
 			// Update RenderWindow (polls events)
-			m_renderSystem->UpdateWindow();
+			m_inputSystem->PollWindowEvents(m_renderSystem->GetRenderWindow());
 
 			updateAccumulator += deltaTime;
 			if (updateAccumulator >= UPDATE_LIMIT)

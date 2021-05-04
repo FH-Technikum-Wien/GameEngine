@@ -1,12 +1,12 @@
 #pragma once
-#include "../../Core.h"
-#include "../Drawable.h"
-#include "../../Logging/Log.h"
-#include "../../Physics/Transformable.h"
+#include "../Core.h"
+#include "../Rendering/Drawable.h"
+#include "../Logging/Log.h"
+#include "../Physics/Transformable.h"
 
-namespace Engine::Rendering::Texts
+namespace Engine::Texts
 {
-    class ENGINE_API Text : public Drawable, public Physics::Transformable
+    class ENGINE_API Text : public Rendering::Drawable, public Physics::Transformable
     {
     public:
         Text(const Vector2& position, const Color& color, const std::string& text, unsigned int fontSize);

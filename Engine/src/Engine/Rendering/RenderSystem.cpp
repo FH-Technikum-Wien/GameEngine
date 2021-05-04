@@ -7,16 +7,6 @@ namespace Engine::Rendering
 		m_window = new RenderWindow(width, height, title);
 	}
 
-	void RenderSystem::UpdateWindow() const
-	{
-		RenderWindow::Event event;
-		while (m_window->PollEvent(event))
-		{
-			if (event.type == RenderWindow::EventType::CLOSE)
-				m_window->Close();
-		}
-	}
-
 	void RenderSystem::Render(const float stateBlending) const
 	{
 		m_window->Clear();
@@ -32,5 +22,9 @@ namespace Engine::Rendering
 	void RenderSystem::Add(Drawable* drawable)
 	{
 		m_drawables.push_back(drawable);
+	}
+	RenderWindow* RenderSystem::GetRenderWindow() const
+	{
+		return m_window;
 	}
 }

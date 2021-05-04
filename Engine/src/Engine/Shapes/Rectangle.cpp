@@ -1,6 +1,6 @@
 #include "Rectangle.h"
 
-namespace Engine::Rendering::Shapes
+namespace Engine::Shapes
 {
 	Rectangle::Rectangle(const Vector2& position, const Vector2& size, const Color& color)
 	{

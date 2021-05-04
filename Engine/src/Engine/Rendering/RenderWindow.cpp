@@ -26,7 +26,22 @@ namespace Engine::Rendering
 	{
 		sf::Event sfEvent;
 		bool polled = m_sfWindow->pollEvent(sfEvent);
-		event.type = static_cast<EventType>(sfEvent.type);
+		event.Type = static_cast<EventType>(sfEvent.type);
+		
+		switch (event.Type)
+		{
+		case EventType::MOUSE_BUTTON_PRESSED:
+			event.Mouse.Position = Vector2(sfEvent.mouseButton.x, sfEvent.mouseButton.y);
+			break;
+		case EventType::MOUSE_BUTTON_RELEASED:
+			break;
+		case EventType::MOUSE_MOVED:
+			event.Mouse.Position = Vector2(sfEvent.mouseMove.x, sfEvent.mouseMove.y);
+			break;
+		default:
+			break;
+		}
+
 		return polled;
 	}
 

@@ -1,6 +1,6 @@
 #include "Text.h"
 
-namespace Engine::Rendering::Texts
+namespace Engine::Texts
 {
 	Text::Text(const Vector2& position, const Color& color, const std::string& text, unsigned int fontSize)
 	{

@@ -4,6 +4,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "Drawable.h"
+#include "../Types/Vector2.h"
 
 namespace Engine::Rendering
 {
@@ -12,11 +13,33 @@ namespace Engine::Rendering
 	public:
 		enum EventType
 		{
-			CLOSE
+			CLOSE,                 
+			RESIZED,               
+			LOST_FOCUS,             
+			GAINED_FOCUS,           
+			TEXT_ENTERED,           
+			KEY_PRESSED,            
+			KEY_RELEASED,           
+			MOUSE_WHEEL_MOVED,       
+			MOUSE_WHEEL_SCROLLED,    
+			MOUSE_BUTTON_PRESSED,    
+			MOUSE_BUTTON_RELEASED,   
+			MOUSE_MOVED,            
+			MOUSE_ENTERED,          
+			MOUSE_LEFT,
 		};
 		struct Event
 		{
-			EventType type;
+		private:
+			struct Mouse
+			{
+				Vector2 Position;
+			};
+
+
+		public:
+			EventType Type;
+			Mouse Mouse;
 		};
 
 	public:

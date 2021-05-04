@@ -13,6 +13,7 @@
 #include <Engine/EntryPoint.h>
 //---------------------------------
 
-//---------- BASIC MATH -----------
-#include <Engine/Math/Vector2.h>
+//---------- BASIC TYPES ----------
+#include <Engine/Types/Vector2.h>
+#include <Engine/Types/Color.h>
 //---------------------------------

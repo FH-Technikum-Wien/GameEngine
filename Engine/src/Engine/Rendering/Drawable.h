@@ -1,6 +1,6 @@
 #pragma once
 #include "../Core.h"
-#include "Color.h"
+#include "../Types/Color.h"
 
 #include <SFML/Graphics.hpp>
 

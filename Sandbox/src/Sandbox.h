@@ -2,8 +2,9 @@
 
 #include <Engine.h>
 
-#include <Engine/Rendering/Shapes/Rectangle.h>
-#include <Engine/Rendering/Texts/Text.h>
+#include <Engine/Shapes/Rectangle.h>
+#include <Engine/Texts/Text.h>
+#include "Engine/Math/Random.h"
 
 class Sandbox : public Engine::Application
 {
@@ -17,21 +18,31 @@ public:
 	void FixedUpdate(float fixedDeltaTime) override;
 
 private:
-	void MoveRectangle(float deltaTime);
+	void MoveRectangle();
+	void OnMouseClick(const Engine::Vector2& position);
+	void OnMouseMove(const Engine::Vector2& position);
+
 	void CalculateFPS(std::chrono::steady_clock::time_point& lastFrameTime, float& deltaTimeSum, unsigned int& frames, float& frameRate, float& frameTime);
 
 private:
-	Engine::Rendering::Shapes::Rectangle* m_movingRect;
+	const unsigned int WINDOW_WIDTH = 1024;
+	const unsigned int WINDOW_HEIGHT = 512;
+
+	Engine::Math::Random random;
+
+	Engine::Shapes::Rectangle* m_movingRect;
+	Engine::Shapes::Rectangle* m_inputRect;
+	Engine::Texts::Text* m_inputText;
 	Engine::Color m_color;
 	bool goRight = true;
 
-	Engine::Rendering::Texts::Text* m_deltaTimeText;
-	Engine::Rendering::Texts::Text* m_frameRateText;
-	Engine::Rendering::Texts::Text* m_updateDeltaTime;
+	Engine::Texts::Text* m_deltaTimeText;
+	Engine::Texts::Text* m_frameRateText;
+	Engine::Texts::Text* m_updateDeltaTime;
 
-	Engine::Rendering::Texts::Text* m_deltaTimeFixedText;
-	Engine::Rendering::Texts::Text* m_frameRateFixedText;
-	Engine::Rendering::Texts::Text* m_fixedUpdateDeltaTimeText;
+	Engine::Texts::Text* m_deltaTimeFixedText;
+	Engine::Texts::Text* m_frameRateFixedText;
+	Engine::Texts::Text* m_fixedUpdateDeltaTimeText;
 
 
 	float m_frameRate = 0.0f;

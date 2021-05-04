@@ -1,11 +1,11 @@
 #pragma once
-#include "../../Core.h"
-#include "../Drawable.h"
-#include "../../Physics/Transformable.h"
+#include "../Core.h"
+#include "../Rendering/Drawable.h"
+#include "../Physics/Transformable.h"
 
-namespace Engine::Rendering::Shapes
+namespace Engine::Shapes
 {
-	class ENGINE_API Rectangle : public Drawable, public Physics::Transformable
+	class ENGINE_API Rectangle : public Rendering::Drawable, public Physics::Transformable
 	{
 	public:
 		Rectangle(const Vector2& position, const Vector2& size, const Color& color);
