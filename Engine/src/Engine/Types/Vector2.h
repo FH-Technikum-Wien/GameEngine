@@ -1,14 +1,17 @@
 #pragma once
 
 #include "../Core.h"
-#include "vector.h"
+#include "../Internal/vector.h"
 
 namespace Engine
 {
+	/// <summary>
+	/// A simple vector with two elements. Provides some basic operations.
+	/// </summary>
 	class ENGINE_API Vector2
 	{
 	private:
-		Vector<float> m_vector = Vector<float>(2);
+		Internal::Vector<float> m_vector = Internal::Vector<float>(2);
 
 	public:
 		Vector2(float x, float y);

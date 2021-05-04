@@ -2,12 +2,9 @@
 
 namespace Engine::Physics
 {
-	PhysicsSystem::PhysicsSystem()
-	{
-	}
-
 	PhysicsSystem::~PhysicsSystem()
 	{
+		// TODO: DELETE DATA
 	}
 
 	void PhysicsSystem::Update(const float fixedDeltaTime)

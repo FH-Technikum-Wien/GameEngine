@@ -17,12 +17,15 @@ namespace Engine
 	void Application::Run()
 	{
 		LOG_TRACE("Application Run");
+		Application::IsRunning = true;
+
 		std::chrono::high_resolution_clock clock;
 		auto lastFrameTime = clock.now();
 
 		double fixedUpdateAccumulator = 0.0f;
 		double updateAccumulator = 0.0f;
-		while (1)
+
+		while (Application::IsRunning)
 		{
 			// Calculate deltaTime in seconds
 			auto currentFrameTime = clock.now();

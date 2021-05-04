@@ -11,6 +11,7 @@ namespace Engine::Shapes
 
 	void Rectangle::Draw(sf::RenderWindow* window, const float stateBlending)
 	{
+		// Interpolate between last and new position and render interpolation instead.
 		Vector2 renderPosition = m_position * stateBlending + (m_previousPosition * (1.0f - stateBlending));
 		m_shape.setPosition(renderPosition.X, renderPosition.Y);
 		window->draw(m_shape);

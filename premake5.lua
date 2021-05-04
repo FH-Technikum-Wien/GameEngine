@@ -27,8 +27,7 @@ project "Engine"
 	includedirs
 	{
 		"%{prj.name}/ThirdParty/spdlog/include",
-		"%{prj.name}/ThirdParty/sfml/include",
-		"%{prj.name}/ThirdParty/vector"
+		"%{prj.name}/ThirdParty/sfml/include"
 	}
 	
 	libdirs
@@ -99,8 +98,7 @@ project "Sandbox"
 	{
 		"Engine/src",
 		"Engine/ThirdParty/spdlog/include",
-		"Engine/ThirdParty/sfml/include",
-		"Engine/ThirdParty/vector"
+		"Engine/ThirdParty/sfml/include"
 	}
 
 	libdirs 

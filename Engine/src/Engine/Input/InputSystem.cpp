@@ -1,4 +1,5 @@
 #include "InputSystem.h"
+#include "../Application.h"
 
 namespace Engine::Input
 {
@@ -15,12 +16,14 @@ namespace Engine::Input
 	void InputSystem::PollWindowEvents(Rendering::RenderWindow* window) const
 	{
 		Rendering::RenderWindow::Event event;
+		// Poll all events and handle them.
 		while (window->PollEvent(event))
 		{
 			switch (event.Type)
 			{
 			case Rendering::RenderWindow::EventType::CLOSE:
 				window->Close();
+				Application::IsRunning = false;
 				break;
 			case Rendering::RenderWindow::EventType::MOUSE_BUTTON_PRESSED:
 				m_onMouseClick(event.Mouse.Position);

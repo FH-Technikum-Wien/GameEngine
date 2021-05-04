@@ -15,12 +15,12 @@ namespace Engine::Physics
 		/// Transforms the object by applying the movement/velocity.
 		/// </summary>
 		/// <param name="fixedDeltaTime">- The fixed delta time for the physics calculation.</param>
-		/// <param name="alpha">- The interpolation factor for the transformation.</param>
 		virtual void Transform(const float fixedDeltaTime) = 0;
 
 		/// <summary>
 		/// Sets the velocity of the transformable.
 		/// </summary>
+		/// <param name="velocity">- The new velocity in pixels per second.</param>
 		virtual void SetVelocity(const Vector2& velocity) = 0;
 
 		/// <summary>
@@ -31,6 +31,7 @@ namespace Engine::Physics
 		/// <summary>
 		/// Sets the position of the object.
 		/// </summary>
+		/// <param name="position">- The new position in pixels.</param>
 		virtual void SetPosition(const Vector2& position) = 0;
 
 		/// <summary>

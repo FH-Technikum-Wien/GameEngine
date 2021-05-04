@@ -13,14 +13,17 @@ namespace Engine::Rendering
 	{
 	public:
 		/// <summary>
-		/// Draws the object with the given render window.
+		/// Draws the object to the given render window.
 		/// </summary>
+		/// <param name="window">- The window to render to.</param>
+		/// <param name="stateBlending">- Allows the interpolation of variables to compensate stutter due to difference in System Framerates.</param>
 		virtual void Draw(sf::RenderWindow* window, const float stateBlending) = 0;
 
 		/// <summary>
 		/// Sets the color of the drawable.
 		/// </summary>
-		virtual void SetColor(const Color& position) = 0;
+		/// <param name="position">- The new color of the drawable.</param>
+		virtual void SetColor(const Color& color) = 0;
 
 		/// <summary>
 		/// Gets the color of the drawable.

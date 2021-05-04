@@ -7,6 +7,9 @@
 
 namespace Engine::Math
 {
+	/// <summary>
+	/// Small random class, providing some faster/better random functions.
+	/// </summary>
 	class ENGINE_API Random
 	{
 	public:
